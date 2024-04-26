@@ -1,0 +1,70 @@
+/* Tags */
+body {
+    margin: 0px;
+    overflow: hidden;
+    font-family: 'Poppins Medium';
+}
+
+iframe {
+    height: 100%;
+    width: 100%;
+}
+
+/* IDs */
+#firstRunDisclaimer {
+    font-size: 12px;
+    font-family: 'Poppins Thin';
+    text-align: center;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 1 em;
+    padding: 2 px 4 px;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+#firstRunTitle {
+    text-align: center;
+    margin: 60px 0 30px;
+    color: #392e5c;
+}
+
+#loadingPlane {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#loadingPlaneText {
+    margin: auto;
+    color: #ffffff;
+    font-size: 36px;
+}
+
+#languageButtonContainer,
+#skipButtonContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px 20px;
+}
+
+#skipButtonContainer {
+    margin-bottom: 30px;
+}
+
+/* Classes: */
+.firstRunLanguageButton {
+    height: 66px;
+    width: 45%;
+    min-width: 260px;
+    max-width: 350px;
+    font-family: 'Poppins Light';
+    background-color: #392e5c;
+    color: #ffffff;
+}
