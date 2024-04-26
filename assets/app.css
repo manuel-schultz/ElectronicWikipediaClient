@@ -58,6 +58,14 @@ iframe {
     margin-bottom: 30px;
 }
 
+#webview {
+    position: absolute;
+    top: 40;
+    left: 0;
+    height: calc(100% - 60px);
+    width: 100%;
+}
+
 /* Classes: */
 .firstRunLanguageButton {
     height: 66px;
