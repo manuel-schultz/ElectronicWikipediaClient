@@ -21,7 +21,8 @@ app.on('ready', () => {
                 webPreferences: {
                     nodeIntegration: true,
                     contextIsolation: false,
-                    enableRemoteModule: true
+                    enableRemoteModule: true,
+                    webviewTag: true
                 }
             })
 
@@ -33,9 +34,9 @@ app.on('ready', () => {
             } else {
                 win.loadFile(path.join(__dirname, 'app', 'first-run.html'));
             }
-    
+
             remoteMain.enable(win.webContents);
-            
+
             // @params path = 'app/layout.html'
             ipc.on('changePage', async function (event, path) {
                 win.loadFile(path);
