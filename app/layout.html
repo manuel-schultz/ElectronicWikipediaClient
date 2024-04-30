@@ -7,11 +7,53 @@
         <script src="../assets/layout.js"></script>
     </head>
     <body>
-        <div id="wikipediaMenuBar"></div>
+        <div id="wikipediaMenuBar">
+            <div class="wikipediaMenuBarPart">
+                <div>
+                    <button class="menuButton" title="Home" onclick="processMenuBarHomeButtonClick()">
+                        <img class="menuBarHomeButtonIcon" src="../assets/img/icons/Home.svg" alt="">
+                    </button>
+                </div>
+                <div>
+                    <button class="menuButton" title="Back" onclick="processMenuBarBackButtonClick()">
+                        <img class="menuBarButtonIcon" src="../assets/img/icons/GoBack.svg" alt="">
+                    </button>
+                </div>
+                <div>
+                    <button class="menuButton" title="Forward" onclick="processMenuBarForwardButtonClick()">
+                        <img class="menuBarButtonIcon" src="../assets/img/icons/GoForward.svg" alt="">
+                    </button>
+                </div>
+                <div>
+                    <button class="menuButton" title="Reload" onclick="processMenuBarReloadButtonClick()">
+                        <img class="menuBarButtonIcon" src="../assets/img/icons/Reload.svg" alt="">
+                    </button>
+                </div>
+            </div>
+            <div class="wikipediaMenuBarPart">
+                <div>
+                    <button class="menuButton" onclick="processMenuBarMinimizeButtonClick()">
+                        <img class="menuBarButtonIcon" src="../assets/img/icons/Minimize.svg" alt="">
+                    </button>
+                </div>
+                <div>
+                    <button class="menuButton" onclick="processMenuBarMaximizeButtonClick()">
+                        <img class="menuBarButtonIcon" src="../assets/img/icons/Maximize.svg" alt="">
+                    </button>
+                </div>
+                <div>
+                    <button class="menuButton" onclick="processMenuBarCloseButtonClick()">
+                        <img class="menuBarButtonIcon" src="../assets/img/icons/Close.svg" alt="">
+                    </button>
+                </div>
+            </div>
+        </div>
         <div id="wikipediaContainer">
         </div>
         <div id="wikipediaStatusBar">
+            <img  id="wikipediaStatusBarCode" src="" alt="">
             <span id="wikipediaStatusBarTitle"></span>
+            <span id="wikipediaStatusBarSpacer">·</span>
             <span id="wikipediaStatusBarURL"></span>
         </div>
     </body>

@@ -66,6 +66,55 @@ iframe {
     width: 100%;
 }
 
+#wikipediaMenuBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    width: 100%;
+    background-color: #392e5c;
+}
+
+#wikipediaMenuBar .wikipediaMenuBarPart:first-child div {
+    border-right: 1px solid #27203f;
+}
+
+#wikipediaMenuBar .wikipediaMenuBarPart:last-child div {
+    border-left: 1px solid #27203f;
+}
+
+#wikipediaStatusBar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 20px;
+    width: 100%;
+    background-color: #392e5c;
+    padding: 0px 8px;
+    color: #ffffff;
+    font-size: 9px;
+}
+
+#wikipediaStatusBarCode {
+    height: 10px;
+    width: 10px;
+}
+
+#wikipediaStatusBarTitle {
+    white-space: nowrap;
+}
+
+#wikipediaStatusBarURL,
+#wikipediaStatusBarSpacer {
+    font-family: 'Poppins Thin';
+    white-space: nowrap;
+}
+
 /* Classes: */
 .firstRunLanguageButton {
     height: 66px;
@@ -75,4 +124,26 @@ iframe {
     font-family: 'Poppins Light';
     background-color: #392e5c;
     color: #ffffff;
+}
+
+.menuBarButtonIcon {
+    height: 11px;
+    width: 11px;
+}
+
+.menuBarHomeButtonIcon {
+    height: 27px;
+    width: 27px;
+}
+
+.menuButton {
+    width: 40px;
+    height:40px;
+    background-color: transparent;
+    border-width: 0px;
+    cursor: pointer;
+}
+
+.wikipediaMenuBarPart {
+    display: flex;
 }
