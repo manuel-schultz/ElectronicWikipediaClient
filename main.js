@@ -1,8 +1,8 @@
-const { app, BrowserWindow } = require('electron')
-const path                   = require('path');
-const remoteMain             = require('@electron/remote/main');
-const dbconn                 = require("./knexconnection.js");
-const ipc                    = require('electron').ipcMain;
+const { app, BrowserWindow, screen } = require('electron')
+const path                           = require('path');
+const remoteMain                     = require('@electron/remote/main');
+const dbconn                         = require("./knexconnection.js");
+const ipc                            = require('electron').ipcMain;
 
 app.on('ready', () => {
     dbconn.runMigrations().then(function() {
@@ -41,6 +41,49 @@ app.on('ready', () => {
             ipc.on('changePage', async function (event, path) {
                 win.loadFile(path);
             });
+
+            ipc.on('closeApp', function (event, path) {
+                closeApp();
+            });
+            
+            ipc.on('minimizeApp', function (event, path) {
+                minimizeApp();
+            });
+            
+            ipc.on('maximizeApp', function (event, path) {
+                toggleMaximizeApp();
+            });
         });
     });
 });
+
+function closeApp() {
+    if (app && !app.isQuiting) {
+        app.quit();
+    }
+}
+
+function minimizeApp() {
+    var windows = BrowserWindow.getAllWindows();
+
+    if (windows.length > 0) {
+        var mainWindow = windows[0];
+        mainWindow.minimize();
+    }
+}
+
+function toggleMaximizeApp() {
+    var windows = BrowserWindow.getAllWindows();
+
+    if (windows.length > 0) {
+        var mainWindow = windows[0];
+    }
+
+    if (mainWindow) {
+        if (mainWindow.isMaximized()) {
+            mainWindow.restore();
+        } else {
+            mainWindow.maximize();
+        }
+    }
+}
