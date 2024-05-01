@@ -144,6 +144,13 @@ iframe {
     cursor: pointer;
 }
 
+.wikipediaMenuBarDragArea {
+    -webkit-app-region: drag;
+    cursor: move;
+    user-select: none;
+    width: 100%;
+}
+
 .wikipediaMenuBarPart {
     display: flex;
 }
