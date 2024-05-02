@@ -14,7 +14,6 @@ exports.up = function(knex) {
         t.timestamp('updated_at').notNull().defaultTo(knex.fn.now());
         t.timestamp('deleted_at').nullable().defaultTo(null);
     }).then(function () {
-        // Nachdem die Tabelle erstellt wurde, füge Standarddatensätze ein
         return knex('preferences').insert([
             { option_name: 'windowHeight', option_value: '600' },
             { option_name: 'windowWidth',  option_value: '800' },
