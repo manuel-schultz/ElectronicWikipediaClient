@@ -43,11 +43,12 @@ async function asyncDbQuery(kenx) {
 }
 
 async function runMigrations() {
+    console.log('Searching for migrations!');
     try {
         await knex.migrate.latest();
-        console.log('Migrations erfolgreich ausgeführt');
+        console.log('Migrations done!');
     } catch (error) {
-        console.error('Fehler beim Ausführen von Migrations:', error);
+        console.error('Error while executing migrations: ', error);
     }
 }
 
