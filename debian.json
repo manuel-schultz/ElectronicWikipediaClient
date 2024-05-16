@@ -1,0 +1,16 @@
+{
+    "dest": "distribution/installers/",
+    "icon": "assets/img/logo/logosizes/96x96.png",
+    "categories": [
+        "Education",
+        "Office"
+    ],
+    "name": "ElectronicWikipediaClient",
+    "maintainer": "Manuel Schultz <manuel@schultz.ch>",
+    "homepage": "https://github.com/manuel-schultz/ElectronicWikipediaClient",
+    "description": "A client for Wikipedia",
+    "license": "ISC",
+    "lintianOverrides": [
+        "changelog-file-missing-in-native-package"
+    ]
+}

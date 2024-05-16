@@ -1,14 +1,34 @@
+const { app } = require('electron')
 const path = require('path');
+const fs = require('fs');
 const ipc = require('electron').ipcMain;
+const env = 'dev';
+let dbPath;
+
+if (env === 'dev') {
+    dbPath = path.join(__dirname, 'database', 'dev.sqlite3');
+} else if (env === 'prod') {
+    let databasePath = path.join(app.getPath('userData'), 'database');
+    try {
+        if (!fs.existsSync(databasePath)) {
+            fs.mkdirSync(databasePath, { recursive: true });
+        }
+    } catch (err) {
+        console.error('Error while creating database folder:', err);
+    }
+    dbPath = path.join(databasePath, 'prod.sqlite3');
+} else {
+
+}
 
 const knex = require('knex')({
     client: 'sqlite3',
     connection: {
-        filename: path.join(__dirname, 'database', 'dev.sqlite3')
+        filename: dbPath
     },
     migrations: {
         tableName: 'migrations',
-        directory: './database/migrations'
+        directory: path.join(__dirname, 'database', 'migrations')
     },
     useNullAsDefault: true
 });
