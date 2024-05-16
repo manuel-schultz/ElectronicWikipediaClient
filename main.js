@@ -2,6 +2,7 @@ const { app, BrowserWindow, screen } = require('electron')
 const path                           = require('path');
 const remoteMain                     = require('@electron/remote/main');
 const dbconn                         = require("./knexconnection.js");
+const fs                             = require('fs');
 const ipc                            = require('electron').ipcMain;
 
 app.on('ready', () => {
@@ -25,7 +26,7 @@ app.on('ready', () => {
                 height: parseInt(preferenceWindowHeight),
                 x: parseInt(preferenceWindowX),
                 y: parseInt(preferenceWindowY),
-                icon: path.join(__dirname, 'img', 'icon.png'),
+                icon: path.join(__dirname, 'assets', 'img', 'logo', 'logosizes', '128x128.png'),
                 titleBarStyle: 'hidden',
                 frame: false,
                 webPreferences: {
