@@ -30,3 +30,13 @@ function hideLoadingPlane() {
 
     loading.remove();
 }
+
+function goToPath(path) {
+    window.location = path;
+}
+
+function lookupTabAmount() {
+    const tabAmount = ipc.sendSync('get_data_structurized', { table: 'tabs', filter: { deleted: false } }).length;
+
+    $('.tabAmountIndicator').text(tabAmount);
+}

@@ -1,14 +1,23 @@
 let latestURLEntry = ipc.sendSync('get_data_structurized', { table: 'preferences', filter: { deleted: false, option_name: 'latestURL' } });
+const activeTabID  = ipc.sendSync('get_data_structurized', { table: 'preferences', filter: { deleted: false, option_name: 'activeTab' } })[0].option_value;
+const activeTab    = ipc.sendSync('get_data_structurized', { table: 'tabs', filter: { deleted: false, id: activeTabID } });
+
 $( function() {
-    if (latestURLEntry) {
-        setWebviewSrc(latestURLEntry[0].option_value);
+    lookupTabAmount();
+
+    if (activeTab) {
+        setWebviewSrc(activeTab[0].page_uri);
     } else {
-        setWebviewSrc('https://wikipedia.org/');
+        if (latestURLEntry) {
+            setWebviewSrc(latestURLEntry[0].option_value);
+        } else {
+            setWebviewSrc('https://wikipedia.org/');
+        }
     }
 
     webviewObject = $('<webview/>', {
         id: 'webview',
-        src: latestURLEntry[0].option_value
+        src: activeTab[0].page_uri
     });
     $('#wikipediaContainer').append(webviewObject);
     
@@ -24,9 +33,13 @@ $( function() {
     webview.addEventListener('page-title-updated', (event) => {
         $('#wikipediaStatusBarTitle').text(event.title);
         $('#wikipediaStatusBarTitle').attr('title', event.title);
+        ipc.sendSync('update_data', { table: 'tabs', filter: { id: activeTab[0].id }, columns: { page_title: event.title } });
     });
 });
 
+function openTabsWindow() {
+    goToPath('tabs-list.html');
+}
 
 function setWebviewSrc(src) {
     $('webview').attr('src', src);
@@ -34,6 +47,7 @@ function setWebviewSrc(src) {
 
 function processWebviewRedirect(event) {
     ipc.sendSync('update_data', { table: 'preferences', filter: { id: latestURLEntry[0].id }, columns: { option_value: event.url } });
+    ipc.sendSync('update_data', { table: 'tabs', filter: { id: activeTab[0].id }, columns: { page_uri: event.url } });
     $('#wikipediaStatusBarURL').text(event.url);
     $('#wikipediaStatusBarURL').attr('title', event.url);
     updateWikipediaStatusCode(event.httpResponseCode);
