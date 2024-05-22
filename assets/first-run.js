@@ -49,6 +49,7 @@ function firstRunSaveLanguage(dbHomepageObject) {
         let preferencesLatestURL = preferences.find(item => item.option_name === 'latestURL');
         let preferencesFirstRun  = preferences.find(item => item.option_name === 'firstRun');
         let preferencesLanguage  = preferences.find(item => item.option_name === 'language');
+        let preferencesActiveTab = preferences.find(item => item.option_name === 'activeTab');
     
         if (preferencesLatestURL) {
             ipc.sendSync('update_data', { table: 'preferences', filter: { id: preferencesLatestURL.id }, columns: { option_value: dbHomepageObject.homepage_uri } });
@@ -67,6 +68,8 @@ function firstRunSaveLanguage(dbHomepageObject) {
         } else {
             ipc.sendSync('insert_data', { table: 'preferences', columns: { option_name: 'language', option_value: dbHomepageObject.iso } });
         }
+
+        ipc.sendSync('update_data', { table: 'tabs', filter: { id: preferencesActiveTab.option_value }, columns: { page_uri: dbHomepageObject.homepage_uri } });
     
         ipc.sendSync('changePage', 'app/layout.html');
     } catch {

@@ -36,6 +36,10 @@ app.on('ready', () => {
                     webviewTag: true
                 }
             })
+            setFirstTab();
+
+            console.log('Preferences:');
+            console.log(preferences);
 
             if (preferenceFirstRun && preferenceFirstRun.option_value === 'true') {
                 win.loadFile(path.join(__dirname, 'app', 'layout.html'));
@@ -77,6 +81,44 @@ app.on('ready', () => {
             
             ipc.on('maximizeApp', function (event, path) {
                 toggleMaximizeApp();
+            });
+
+            ipc.on('createTab', async function (event) {
+                let newTab = await createNewHomepageTab();
+                updateActiveTab(newTab[0]);
+
+                event.returnValue = newTab;
+            });
+
+            ipc.on('chooseTab', async function (event, id) {
+                updateActiveTab(id);
+                event.returnValue = true;
+            });
+
+            ipc.on('deleteTab', async function (event, id) {
+                let date = new Date();
+                var newTabUsed = false;
+                let activeTab = await dbconn.knex('preferences').where({ deleted: false, option_name: 'activeTab' });
+                var activeTabID = activeTab[0].option_value;
+                await dbconn.knex('tabs').where({ id: id }).update({ deleted: true, deleted_at: date });
+                let allTabs = await dbconn.knex('tabs').where({ deleted: false });
+                
+                if (allTabs.length === 0) {
+                    await createNewHomepageTab();
+                    allTabs = await dbconn.knex('tabs').where({ deleted: false });
+                    newTabUsed = true;
+                }
+
+                if (id === parseInt(activeTab[0].option_value)) {
+                    let maxTabID = allTabs.reduce((max, obj) => (obj.id > max ? obj.id : max), -Infinity);
+                    updateActiveTab(maxTabID);
+                    activeTabID = maxTabID;
+                }
+
+                event.returnValue = {
+                    newTabUsed: newTabUsed,
+                    activeTab: activeTabID
+                };
             });
         });
     });
@@ -140,4 +182,55 @@ async function updateWindowDimensions(windowBounds) {
         await knex.rollback(error);
         console.log('Error while saveing bounds!');
     }
+}
+
+async function setFirstTab() {
+    let tabs = await dbconn.knex.select('id', 'page_title', 'page_uri', 'tab_group_id', 'deleted').from('tabs').where({ deleted: false });
+
+    if (tabs.length > 0) {
+        return;
+    }
+
+    let preferences = await dbconn.knex.select('option_name', 'option_value', 'deleted').from('preferences').where({ deleted: false });
+
+    let latestURL = preferences.find(element => element.option_name == 'latestURL');
+    let firstTab = await createNewTab('Automatic Tab', latestURL.option_value);
+    updateActiveTab(firstTab[0]);
+
+}
+
+async function createNewTab(title, url, groupID = null) {
+    console.log('Createing New Tab with values: ', [title, url, groupID]);
+    let tab = await dbconn.knex('tabs').insert(
+        {
+            page_title: title,
+            page_uri: url,
+            tab_group_id: groupID
+        }
+    );
+    return tab;
+}
+
+async function updateActiveTab(id) {
+    let activeTab = await dbconn.knex.select('id', 'option_name', 'option_value', 'deleted').from('preferences').where({ deleted: false, option_name: 'activeTab' });
+    
+    if (activeTab.length > 0) {
+        await dbconn.knex('preferences').where({id: activeTab[0].id}).update({option_value: id});
+    } else {
+        var activeTabID = await dbconn.knex('preferences').insert(
+            {
+                option_name: 'activeTab',
+                option_value: id
+            }
+        );
+    }
+
+    return activeTabID;
+}
+
+async function createNewHomepageTab() {
+    let usedLanguage = await dbconn.knex.select('option_value').from('preferences').where({ deleted: false, option_name: 'language' });
+    let usedHomepage = await dbconn.knex.select('homepage_uri').from('homepages').where({ deleted: false, iso: usedLanguage[0].option_value });
+    let newTab = await createNewTab('Automatic Tab', usedHomepage[0].homepage_uri);
+    return newTab;
 }

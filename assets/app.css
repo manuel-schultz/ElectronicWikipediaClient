@@ -30,6 +30,16 @@ iframe {
     color: #392e5c;
 }
 
+#tabsContainer {
+    padding: 0 10px;
+}
+
+#tabListTitle {
+    text-align: center;
+    margin: 10px 0 10px;
+    color: #392e5c;
+}
+
 #loadingPlane {
     height: 100%;
     width: 100%;
@@ -54,15 +64,55 @@ iframe {
     gap: 30px 20px;
 }
 
+#tabsContainer {
+    width: calc(100% - 20px);
+}
+
+#tabsContainerViewList,
+#tabsContainerViewTiles {
+    overflow: auto;
+    height: calc(100% - 78px);
+}
+
+#tabsContainerViewListTable {
+    width:100%;
+    border-collapse: collapse;
+}
+
+#tabsContainerViewListTableBody {
+    border-top: 1px solid #27203f;
+}
+
+#tabsContainerViewListTableBody tr {
+    border-bottom: 1px solid #27203f;
+    cursor: pointer;
+}
+
+#tabsContainerViewListTableBody tr td {
+    padding:20px 5px;
+}
+
+#tabsContainerViewTiles {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 10px;
+}
+
 #skipButtonContainer {
     margin-bottom: 30px;
 }
 
-#webview {
+#webview,
+#tabsContainer {
     position: absolute;
     top: 40;
     left: 0;
     height: calc(100% - 60px);
+}
+
+#webview {
     width: 100%;
 }
 
@@ -116,6 +166,10 @@ iframe {
 }
 
 /* Classes: */
+.activeTabEntry {
+    background-color: #dbd0ff;
+}
+
 .firstRunLanguageButton {
     height: 66px;
     width: 45%;
@@ -124,6 +178,10 @@ iframe {
     font-family: 'Poppins Light';
     background-color: #392e5c;
     color: #ffffff;
+}
+
+.hidden {
+    display: none !important;
 }
 
 .menuBarButtonIcon {
@@ -142,6 +200,63 @@ iframe {
     background-color: transparent;
     border-width: 0px;
     cursor: pointer;
+}
+
+.tabAmountIndicator {
+    color: #ffffff;
+    font-size: 12px;
+    position: absolute;
+    top: 20px;
+    font-weight: bold;
+}
+
+.tabDeletionIcon {
+    height: 11px;
+    width: 11px;
+}
+
+.tabListPageTitle {
+    font-size: 20px;
+    color: #392e5c;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.tabListURL {
+    font-size: 12px;
+    font-family: 'Poppins Thin';
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.tabTableDeletionButton, 
+.tabTileDeletionButton {
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    float: right;
+    margin-right: 10px;
+    margin-top: -14px;
+    cursor: pointer;
+    background-color: #392e5c;
+    border: 1px solid #27203f;
+}
+
+.tabsContainerSingleTile {
+    width: calc(50% - 17px);
+    border: 1px solid #27203f;
+    text-align: center;
+    height: 130px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px;
 }
 
 .wikipediaMenuBarDragArea {

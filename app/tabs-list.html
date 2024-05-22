@@ -1,46 +1,44 @@
-<html id="page-002-layout">
+<html id="page-003-tabslist">
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" href="../assets/fonts.css">
         <link rel="stylesheet" href="../assets/app.css">
         <script src="../assets/app.js"></script>
-        <script src="../assets/layout.js"></script>
+        <script src="../assets/tabs-list.js"></script>
     </head>
+
     <body>
         <div id="wikipediaMenuBar">
-            <div class="wikipediaMenuBarPart">
+            <div class="wikipediaMenuBarPart" style="width: 164px;">
                 <div>
-                    <button class="menuButton" title="Home" onclick="processMenuBarHomeButtonClick()">
+                    <button class="menuButton" title="Home" onclick="closeTabsWindow()">
                         <img class="menuBarHomeButtonIcon" src="../assets/img/icons/Home.svg" alt="">
                     </button>
                 </div>
                 <div>
-                    <button class="menuButton" title="Back" onclick="processMenuBarBackButtonClick()">
-                        <img class="menuBarButtonIcon" src="../assets/img/icons/GoBack.svg" alt="">
+                    <button class="menuButton" title="Add Tab" onclick="createTabEntry()">
+                        <img class="menuBarButtonIcon" src="../assets/img/icons/Add.svg" alt="">
                     </button>
                 </div>
                 <div>
-                    <button class="menuButton" title="Forward" onclick="processMenuBarForwardButtonClick()">
-                        <img class="menuBarButtonIcon" src="../assets/img/icons/GoForward.svg" alt="">
+                    <button id="tabViewSwitchButtonList" class="menuButton" title="Change View (List)" onclick="tabViewSwitchView('List')">
+                        <img class="menuBarButtonIcon" src="../assets/img/icons/TabViewList.svg" alt="">
                     </button>
-                </div>
-                <div>
-                    <button class="menuButton" title="Reload" onclick="processMenuBarReloadButtonClick()">
-                        <img class="menuBarButtonIcon" src="../assets/img/icons/Reload.svg" alt="">
+                    <button id="tabViewSwitchButtonTiles" class="menuButton" title="Change View (Tiles)" onclick="tabViewSwitchView('Tiles')">
+                        <img class="menuBarButtonIcon" src="../assets/img/icons/TabViewTiles.svg" alt="">
                     </button>
                 </div>
             </div>
             <div class="wikipediaMenuBarDragArea"></div>
             <div class="wikipediaMenuBarPart">
                 <div>
-                    <button class="menuButton" title="Tabs" onclick="openTabsWindow()">
+                    <button class="menuButton" title="Tabs" onclick="closeTabsWindow()">
                         <img class="menuBarButtonIcon" src="../assets/img/icons/Tabs.svg" alt="">
-                        <span class="tabAmountIndicator"></span>
+                        <span class="tabAmountIndicator"></span> 
                     </button>
-                </div>
+               </div>
             </div>
             <div class="wikipediaMenuBarDragArea"></div>
-            <div class="wikipediaMenuBarDragArea" style="max-width: 40px;"></div>
             <div class="wikipediaMenuBarPart">
                 <div>
                     <button class="menuButton" onclick="processMenuBarMinimizeButtonClick()">
@@ -59,13 +57,21 @@
                 </div>
             </div>
         </div>
-        <div id="wikipediaContainer">
+        <div id="tabsContainer">
+            <div id="tabsContainerHeading">
+                <div>
+                    <h1 id="tabListTitle">Tabs:</h1>
+                </div>
+            </div>
+            
+            <div id="tabsContainerViewList">
+                <table  id="tabsContainerViewListTable">
+                    <tbody id="tabsContainerViewListTableBody"></tbody>
+                </table>
+            </div>
+            
+            <div id="tabsContainerViewTiles"></div>
         </div>
-        <div id="wikipediaStatusBar">
-            <img  id="wikipediaStatusBarCode" src="" alt="">
-            <span id="wikipediaStatusBarTitle"></span>
-            <span id="wikipediaStatusBarSpacer">·</span>
-            <span id="wikipediaStatusBarURL"></span>
-        </div>
+        <div id="wikipediaStatusBar"></div>
     </body>
 </html>
